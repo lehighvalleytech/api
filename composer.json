@@ -1,0 +1,36 @@
+{
+    "name": "lvtech/api",
+    "description": "API for LVTech Related Apps",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.zendframework.com/"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "chriso/klein.php",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/chriso/klein.php.git",
+                    "type": "git",
+                    "reference" : "master"
+                },
+                "autoload": {
+                    "files": ["klein.php"]
+                }                
+            }
+        }
+    ],
+    "require": {
+        "chriso/klein.php": "dev-master",
+        "zendframework/zendframework": "2.*",
+        "dflydev/markdown": "1.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Meetup": "lib/",
+            "LVTech": "lib/"
+        }
+    }      
+}
