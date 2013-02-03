@@ -59,7 +59,7 @@ respond('GET', '/meetup/[:date]', function (_Request $request, _Response $respon
     $client->setUri($trello->getBaseUrl() . '/boards/'.$boardId.'/lists?filter=all');
 
     //TODO: should do some error checking
-    $data = json_decode($client->send()->getBody(), true);
+    $data = \Zend\Json\Decoder::decode($client->send()->getBody(), true);
     
     //search for the meetup
     $listId = null;
@@ -79,7 +79,7 @@ respond('GET', '/meetup/[:date]', function (_Request $request, _Response $respon
     $client->setUri($trello->getBaseUrl() . '/lists/'.$listId.'/cards?attachments=true');
 
     //TODO: should do some error checking
-    $data = json_decode($client->send()->getBody(), true);
+    $data = \Zend\Json\Decoder::decode($client->send()->getBody(), true);
 
     //assemble a response
     $meetup = array(
@@ -125,13 +125,71 @@ respond('GET', '/meetup/[:date]', function (_Request $request, _Response $respon
         }
     }
     
+    //add in meetup details
+    if(isset($meetup['links']['meetup.com'])){
+        //look for meetup id
+        $parts = explode('/', trim($meetup['links']['meetup.com'], '/'));
+        $meetupId = end($parts);
+        //basic meetup info
+        $client = new \Zend\Http\Client();
+        $client->setOptions(array('sslverifypeer' => false));
+        $client->getRequest()->setUri('https://api.meetup.com/2/event/' . $meetupId);
+        $client->getRequest()->getQuery()->set('key', getenv('MEETUP_KEY'));
+        
+        //TODO: error checking might be a good idea
+        $data = \Zend\Json\Decoder::decode($client->send()->getBody(), true);
+        
+        $meetup['count']['meetup.com'] = $meetup['count']['total'] = $data['headcount']?$data['headcount']:$data['yes_rsvp_count'];
+
+        //meetup comments
+        $client->getRequest()->setUri('https://api.meetup.com/2/event_comments/')
+                             ->getQuery()->set('event_id', $meetupId)
+                                         ->set('fields', 'member_photo');
+        
+        //TODO: error checking might be a good idea
+        $data = \Zend\Json\Decoder::decode($client->send()->getBody(), true);
+        
+        $meetup['comments'] = array();
+        foreach($data['results'] as $comment){
+            $comment = array(
+                'date' => new DateTime('@'.$comment['time']/1000),
+                'text' => $comment['comment'],
+                'member' => array(
+                    'image' => array('url' => $comment['member_photo']['photo_link']),
+                	'name' => $comment['member_name'])
+            );
+            $meetup['comments'][] = $comment;
+        }
+        
+        //meetup photos
+        $client->getRequest()->setUri('https://api.meetup.com/2/photos/')
+                             ->getQuery()->set('event_id', $meetupId);
+        
+        //TODO: error checking might be a good idea
+        $data = \Zend\Json\Decoder::decode($client->send()->getBody(), true);
+
+        $meetup['photos'] = array();
+        foreach($data['results'] as $photo){
+            $photo = array(
+                'date' => new DateTime('@'.$photo['created']/1000),
+                'image' => array('url' => $photo['highres_link']),
+                'member' => array(
+                    'image' => array('url' => $photo['member_photo']['photo_link']),
+                	'name' => $photo['member']['name'])
+            );
+            $meetup['photos'][] = $photo;
+        }
+    }
+
+    
     //transform dates
     array_walk_recursive($meetup, function(&$item, $key){
         if('date' == $key AND $item instanceof DateTime){
             $item = $item->format('r');
         }
     });
-
+    
+    
     $response->json($meetup);
     return;
 });
