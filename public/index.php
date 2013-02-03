@@ -179,6 +179,32 @@ respond('GET', '/meetup/[:date]', function (_Request $request, _Response $respon
             );
             $meetup['photos'][] = $photo;
         }
+        
+        //meetup rsvps
+        $client->getRequest()->setUri('https://api.meetup.com/2/rsvps/')
+                             ->getQuery()->set('event_id', $meetupId)
+                                         ->set('fields', 'other_services');
+        
+        //TODO: error checking might be a good idea
+        $data = \Zend\Json\Decoder::decode($client->send()->getBody(), true);        
+        
+        $meetup['members'] = array();
+        foreach($data['results'] as $rsvp){
+            if('yes' != $rsvp['response']){
+                continue;
+            }
+            
+            $member = array(
+                'date' => new DateTime('@'.$rsvp['created']/1000),
+                'text' => isset($rsvp['comments'])?$rsvp['comments']:'',
+                'count' => $rsvp['guests']+1,
+                'member' => array(
+                    'image' => array('url' => $rsvp['member_photo']['photo_link']),
+                	'name' => $rsvp['member']['name'])
+            );
+            
+            $meetup['members'][] = $member;
+        }
     }
 
     
