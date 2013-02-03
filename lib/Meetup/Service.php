@@ -66,7 +66,11 @@ class Service
     public function getNextMatch(Range $range, Match\MatchInterface $match)
     {
         $events = $this->getEvents($range);
-        //look for match        
+        foreach($events as $event){
+            if($match->match($event->getTitle())){
+                return $event;
+            }
+        }
     }
     
     public function getEvent($id)

@@ -35,7 +35,36 @@ $parseCard = function($card) use ($markdown, $findCover){
     return $parsed;
 };
 
+//special root redirects, allows some fun custom domains
+respond('GET', '/', function(_Request $request, _Response $response){
+    switch($_SERVER['HTTP_HOST']){ //abstract for testing    
+        case 'devfriday.com':
+        case 'www.devfriday.com':
+            //find the next dev friday
+            try{
+                $meetup = new \Meetup\Service(getenv('MEETUP_KEY'), getenv('MEETUP_GROUP'));
+                //TODO: this would be a good thing to cache
+                $event = $meetup->getNextMatch(new \Meetup\Range(new DateTime()), new \Meetup\Match\Simple('Developer Friday'));
+                if(!$event){
+                    throw new Exception('the world has ended, as the next dev friday could not be found');
+                }
+                $url = $event->getUrl();
+            } catch (Exception $e){
+                //TODO: should probably log the error
+                $url = 'http://meetup.lehighvalleytech.org/events/61071712/'; //pick the first dev friday in case of zombies
+            }
+            
+            $response->redirect($url);
+            break;
+        default:
+            //should we do this? sure, why not.
+            $response->redirect('http://lehighvalleytech.org');
+            break;
+    }
+});
 
+//lvtech meetup TODO: meetup or monthly maybe better names, just avoiding 
+//confusion with meetup.com
 respond('GET', '/lvtech/[:date]', function (_Request $request, _Response $response) use ($parseCard) {
     //try to find date
     try{
