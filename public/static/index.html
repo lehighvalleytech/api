@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+  <head>
+    <meta charset="utf-8">
+    <title>Example LVTech Site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script>
+      function ExampleCtrl($scope, $http) {
+  	    //simple API call to an interesting meetup
+  	    $http.get('../lvtech/201212').success(function(data){
+  	      $scope.lvtech = data.lvtech; //assign the user data
+  	      console.log(data);
+  	    });    	   
+      }    
+    </script>
+  </head>
+  <body ng-controller="ExampleCtrl">
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="muted">LVTech</h3>
+      </div>
+
+      <hr>
+
+      <div class="jumbotron">
+        <h1>{{lvtech.title}}</h1>
+        <p class="lead">{{lvtech.markdown}}</p>
+        <a class="btn btn-large btn-success" href="{{lvtech.links.meetup}}">RSVP On Meetup</a>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span12">
+          <div ng-repeat="presenter in lvtech.presenters">
+            <img ng-show="presenter.image.url" class="pull-right" src="{{presenter.image.url}}" style="max-width: 200px; margin-left: 10px"/>
+            <h4>{{presenter.title}}</h4>
+            <p>{{presenter.markdown}}</p>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      
+      <div class="row-fluid marketing">
+        <div class="span6">
+          <img ng-show="lvtech.venue.image.url" src="{{lvtech.venue.image.url}}" style="max-width: 200px; margin-left: 10px"/>
+          <h4>{{lvtech.venue.title}}</h4>
+          <p>{{lvtech.venue.markdown}}</p>
+        </div>
+        <div class="span6">
+          <img ng-show="lvtech.after.image.url" src="{{lvtech.after.image.url}}" style="max-width: 200px; margin-left: 10px"/>
+          <h4>{{lvtech.after.title}}</h4>
+          <p>{{lvtech.after.markdown}}</p>
+        </div>
+      </div>      
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; Company 2012</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

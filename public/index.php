@@ -36,7 +36,7 @@ $parseCard = function($card) use ($markdown, $findCover){
 };
 
 
-respond('GET', '/meetup/[:date]', function (_Request $request, _Response $response) use ($parseCard) {
+respond('GET', '/lvtech/[:date]', function (_Request $request, _Response $response) use ($parseCard) {
     //try to find date
     try{
         if(strlen($request->date) != 6){
@@ -100,7 +100,7 @@ respond('GET', '/meetup/[:date]', function (_Request $request, _Response $respon
                     //associated links
                     foreach($card['attachments'] as $attachment){
                         if(strpos($attachment['name'], 'meetup.lehighvalleytech.org') !== false){
-                            $meetup['links']['meetup.com'] = $attachment['url'];
+                            $meetup['links']['meetup'] = $attachment['url'];
                             //TODO: cover image should be checked for
                         }
                     }
@@ -128,7 +128,7 @@ respond('GET', '/meetup/[:date]', function (_Request $request, _Response $respon
     //add in meetup details
     if(isset($meetup['links']['meetup.com'])){
         //look for meetup id
-        $parts = explode('/', trim($meetup['links']['meetup.com'], '/'));
+        $parts = explode('/', trim($meetup['links']['meetup'], '/'));
         $meetupId = end($parts);
         //basic meetup info
         $client = new \Zend\Http\Client();
@@ -216,7 +216,7 @@ respond('GET', '/meetup/[:date]', function (_Request $request, _Response $respon
     });
     
     
-    $response->json($meetup);
+    $response->json(array('lvtech' => $meetup));
     return;
 });
 
