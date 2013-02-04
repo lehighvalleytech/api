@@ -155,7 +155,7 @@ respond('GET', '/lvtech/[:date]', function (_Request $request, _Response $respon
     }
     
     //add in meetup details
-    if(isset($meetup['links']['meetup.com'])){
+    if(isset($meetup['links']['meetup'])){
         //look for meetup id
         $parts = explode('/', trim($meetup['links']['meetup'], '/'));
         $meetupId = end($parts);
@@ -177,7 +177,6 @@ respond('GET', '/lvtech/[:date]', function (_Request $request, _Response $respon
         
         //TODO: error checking might be a good idea
         $data = \Zend\Json\Decoder::decode($client->send()->getBody(), true);
-        
         $meetup['comments'] = array();
         foreach($data['results'] as $comment){
             $comment = array(
