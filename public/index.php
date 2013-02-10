@@ -38,8 +38,7 @@ $parseCard = function($card) use ($markdown, $findCover){
 //special root redirects, allows some fun custom domains
 respond('GET', '/', function(_Request $request, _Response $response){
     switch($_SERVER['HTTP_HOST']){ //abstract for testing    
-        case 'devfriday.com':
-        case 'www.devfriday.com':
+        case 'next.devfriday.com':
             //find the next dev friday
             try{
                 $meetup = new \Meetup\Service(getenv('MEETUP_KEY'), getenv('MEETUP_GROUP'));
