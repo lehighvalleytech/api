@@ -25,7 +25,8 @@
     "require": {
         "chriso/klein.php": "dev-master",
         "zendframework/zendframework": "2.*",
-        "dflydev/markdown": "1.0.*@dev"
+        "dflydev/markdown": "1.0.*@dev",
+        "mustache/mustache": "v2.1.0"
     },
     "autoload": {
         "psr-0": {

@@ -1,0 +1,32 @@
+<?php 
+$title = function($dash, $title){
+    $line = str_pad('', strlen($title), $dash);
+    return implode(PHP_EOL, array($line, $title, $line));
+};
+
+?>
+
+<pre>
+<?php echo $title('=', $this->escape($this->lvtech['title']))?>
+
+<?php echo $this->escape($this->lvtech['links']['meetup']) . PHP_EOL?>
+
+<?php foreach($this->lvtech['content'] as $content):?>
+<?php echo $this->escape($content['title']) . PHP_EOL?>
+<?php echo wordwrap($this->escape($content['markdown'])) . PHP_EOL . PHP_EOL?>
+<?php endforeach;?>
+
+<?php echo $title('=', 'Presenters')?>
+
+<?php foreach($this->lvtech['presenters'] as $presenter):?>
+<?php echo "# " . $this->escape($presenter['title']) . PHP_EOL?>
+<?php echo wordwrap($this->escape($presenter['markdown'])) . PHP_EOL . PHP_EOL?>
+<?php endforeach;?>
+
+<?php echo $title('=', "Thanks to " . $this->escape($this->lvtech['venue']['title'])) . PHP_EOL?>
+<?php echo wordwrap($this->escape($this->lvtech['venue']['markdown'])) . PHP_EOL . PHP_EOL?>
+
+<?php echo $title('=', $this->escape($this->lvtech['after']['title'])) . PHP_EOL?>
+<?php echo wordwrap($this->escape($this->lvtech['after']['markdown'])) . PHP_EOL . PHP_EOL?>
+
+</pre>

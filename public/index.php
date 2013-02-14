@@ -77,7 +77,7 @@ respond('GET', '/', function(_Request $request, _Response $response){
 
 //lvtech meetup TODO: meetup or monthly maybe better names, just avoiding 
 //confusion with meetup.com
-respond('GET', '/lvtech/[:date]', function (_Request $request, _Response $response) use ($parseCard) {
+respond('GET', '/lvtech/[i:date].[json|html|txt:format]?', function (_Request $request, _Response $response) use ($parseCard) {
     //try to find date
     try{
         if(strlen($request->date) != 6){
@@ -247,7 +247,6 @@ respond('GET', '/lvtech/[:date]', function (_Request $request, _Response $respon
         }
     }
 
-    
     //transform dates
     array_walk_recursive($meetup, function(&$item, $key){
         if('date' == $key AND $item instanceof DateTime){
@@ -255,8 +254,21 @@ respond('GET', '/lvtech/[:date]', function (_Request $request, _Response $respon
         }
     });
     
+    //some formatting help
+    switch($request->param('format', 'json')){
+        case 'txt':
+            $response->render('../view/lvtech.txt.phtml', array('lvtech' => $meetup));
+            break;
+        case 'html':
+            $m = new Mustache_Engine();
+            echo $m->render(file_get_contents('../view/lvtech.html.json'), array('lvtech' => $meetup));
+            break;
+        default:
+            $response->json(array('lvtech' => $meetup));        
+            break;
+    }    
     
-    $response->json(array('lvtech' => $meetup));
+    
     return;
 });
 

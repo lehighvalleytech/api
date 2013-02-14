@@ -1,0 +1,30 @@
+<h1>{{lvtech.title}}</h1>
+{{#lvtech.content}}
+  {{#image}}
+    <img src="{{url}}" />
+  {{/image}}
+  <h3>{{title}}</h3>
+  <p>{{{html}}}</p>
+{{/lvtech.content}}
+
+
+<h2>Presenters</h2>
+{{#lvtech.presenters}}
+  {{#image}}
+    <img src="{{url}}" />
+  {{/image}}
+  <p>{{{html}}}</p>
+{{/lvtech.presenters}}
+
+<h2>After the Meetup</h2>
+{{#lvtech.after.image}}
+  <img src="{{url}}" />
+{{/lvtech.after.image}}
+{{{lvtech.after.html}}}
+
+<h2>Venue Sponsor</h2>
+<p>Special thanks to {{lvtech.venue.title}} for hosting this month's meetup.</p>
+{{#lvtech.venue.image}}
+  <img src="{{url}}" />
+{{/lvtech.venue.image}}
+{{{lvtech.venue.html}}}
