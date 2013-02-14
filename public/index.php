@@ -55,6 +55,19 @@ respond('GET', '/', function(_Request $request, _Response $response){
             
             $response->redirect($url);
             break;
+        case 'radio.lehighvalleytech.org':
+            //check if the stream be on
+            $client = new \Zend\Http\Client();
+            $client->setUri('http://a2sw.bytecost.com:8000/lvtechradio');
+            $status = $client->send()->getStatusCode(); 
+
+            if($status < 200 OR $status >= 300){
+                $response->redirect('http://soundcloud.com/lvtech');    
+            } else {
+                $response->redirect('http://a2sw.bytecost.com:8000/lvtechradio.m3u');
+            }
+            
+            break;
         default:
             //should we do this? sure, why not.
             $response->redirect('http://lehighvalleytech.org');
