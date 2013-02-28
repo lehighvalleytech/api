@@ -58,13 +58,21 @@ respond('GET', '/', function(_Request $request, _Response $response){
         case 'radio.lehighvalleytech.org':
             //check if the stream be on
             $client = new \Zend\Http\Client();
-            $client->setUri('http://a2sw.bytecost.com:8000/lvtechradio');
+            $client->setUri('http://a2sw.bytecost.com:8000/lvtechradio.m3u');
             $status = $client->send()->getStatusCode(); 
 
             if($status < 200 OR $status >= 300){
                 $response->redirect('http://soundcloud.com/lvtech');    
             } else {
-                $response->redirect('http://a2sw.bytecost.com:8000/lvtechradio.m3u');
+                //handle different clients
+                switch(true){
+                    case strpos($request->userAgent(), 'Android');
+                        $response->redirect('http://a2sw.bytecost.com:8000/lvtechradio');
+                        break;
+                    default:
+                        $response->redirect('http://a2sw.bytecost.com:8000/lvtechradio.m3u');
+                        break;
+                }
             }
             
             break;
