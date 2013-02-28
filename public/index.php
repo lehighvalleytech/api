@@ -58,10 +58,10 @@ respond('GET', '/', function(_Request $request, _Response $response){
         case 'radio.lehighvalleytech.org':
             //check if the stream be on
             $client = new \Zend\Http\Client();
-            $client->setUri('http://a2sw.bytecost.com:8000/lvtechradio.m3u');
-            $status = $client->send()->getStatusCode(); 
+            $client->setUri('http://a2sw.bytecost.com:8000/?mount=/lvtechradio');
+            $result = $client->send();
 
-            if($status < 200 OR $status >= 300){
+            if(!strpos($result->getBody(), 'Mount Point /lvtechradio')){
                 $response->redirect('http://soundcloud.com/lvtech');    
             } else {
                 //handle different clients
