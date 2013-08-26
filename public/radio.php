@@ -12,21 +12,12 @@ $app = new App();
 /**
  * Podcast Feeds
  */
-
-$route = SegmentRoute::factory(array(
-    'route' => '/feed/:name[.:format]',
-    'constraints' => array(
-        'name'   => '(lvtech|developers)',
-        'format' => '(rss|atom|json)',
-    ),
-    'defaults' => array(
-        'format' => 'atom',
-    ),
-));
-
-$app->get($route, function (App $app) {
-    $name   = $app->params()->getParam('name');
-    $format = $app->params()->getParam('format');
+respond('GET', '/feed/[lvtech|developers:name].[rss|atom|json:format]?', function(_Request $request, _Response $response){
+    $name   = $request->name;
+    $format = $request->format;
+    if(empty($format)){
+        $format = 'atom'; //default
+    }
 
     //TODO: move to config
     switch($name){
@@ -56,24 +47,13 @@ $app->get($route, function (App $app) {
             echo json_encode($feed->jsonSerialize());
             break;
     }
-
-})->name('feed');
+});
 
 /**
  * Live Stream / Status
  */
-$route = SegmentRoute::factory(array(
-    'route' => '/live[.:format]',
-    'constraints' => array(
-        'format' => '(json|)',
-    ),
-    'defaults' => array(
-        'format' => '',
-    ),
-));
-
-$app->get($route, function (App $app) {
-    $format = $app->params()->getParam('format');
+respond('GET', '/live.[json|:format]?', function(_Request $request, _Response $response){
+    $format = $request->format;
     $stream = new LVTech\Radio\Stream();
 
     //request for stream status
@@ -83,21 +63,19 @@ $app->get($route, function (App $app) {
     }
 
     //request for live stream, try to give the device what it wants
-    $agent = $app->request()->getHeaders()->get('User-Agent');
-
-    if(strpos($agent->getFieldValue(), 'Android')){
-        $app->redirect($stream->getMP3());
+    if(strpos($request->userAgent(), 'Android')){
+        $response->redirect($stream->getMP3());
     } else {
-        $app->redirect($stream->getM3u());
+        $response->redirect($stream->getM3u());
     }
 
-})->name('live');
+});
 
 /**
  * Main Site
  */
-$app->get('/', function (App $app) {
-   $app->redirect('http://soundcloud.com/lvtech');
+respond('GET', '/', function(_Request $request, _Response $response){
+    $response->redirect('http://soundcloud.com/lvtech');
 });
 
-$app->run();
+dispatch();

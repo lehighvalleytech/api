@@ -4,6 +4,7 @@ require_once '../vendor/autoload.php';
 //delegate radio subdomain to another script
 if($_SERVER['HTTP_HOST'] == 'radio.lehighvalleytech.org'){
     require_once 'radio.php'; //handled by another 'app'
+    return;
 }
 
 
