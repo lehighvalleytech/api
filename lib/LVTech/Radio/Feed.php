@@ -8,7 +8,7 @@ use Zend\Feed\Writer\Entry as Entry;
  * Generate a podcast feed from a soundcloud playlist.
  * @author Tim Lytle <tim@timlytle.net>
  */
-abstract class Feed implements \JsonSerializable
+abstract class Feed //implements \JsonSerializable
 {
     protected $type = 'atom';
 

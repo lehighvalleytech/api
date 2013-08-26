@@ -1,13 +1,10 @@
 <?php
-use Phlyty\App;
 use Zend\Mvc\Router\Http\Segment as SegmentRoute;
 
 /**
  * @author Tim Lytle <tim@timlytle.net>
  */
 require_once '../vendor/autoload.php';
-
-$app = new App();
 
 /**
  * Podcast Feeds
