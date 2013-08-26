@@ -26,7 +26,8 @@
         "chriso/klein.php": "dev-master",
         "zendframework/zendframework": "2.*",
         "dflydev/markdown": "1.0.*@dev",
-        "mustache/mustache": "v2.1.0"
+        "mustache/mustache": "v2.1.0",
+        "phly/phlyty": "1.0.1"
     },
     "autoload": {
         "psr-0": {
