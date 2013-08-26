@@ -5,29 +5,14 @@
         {
             "type": "composer",
             "url": "https://packages.zendframework.com/"
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "chriso/klein.php",
-                "version": "dev-master",
-                "source": {
-                    "url": "https://github.com/chriso/klein.php.git",
-                    "type": "git",
-                    "reference" : "master"
-                },
-                "autoload": {
-                    "files": ["klein.php"]
-                }                
-            }
         }
     ],
     "require": {
-        "chriso/klein.php": "dev-master",
         "zendframework/zendframework": "2.*",
         "dflydev/markdown": "1.0.*@dev",
         "mustache/mustache": "v2.1.0",
-        "phly/phlyty": "1.0.1"
+        "phly/phlyty": "1.0.1",
+        "klein/klein": "v1.2.0"
     },
     "autoload": {
         "psr-0": {
