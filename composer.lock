@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3cfdb0d31071669e8316320b97d65e6f",
+    "hash": "137dad8d2cd800f3d461f0d0f3f474aa",
     "packages": [
         {
             "name": "chriso/klein.php",
@@ -19,7 +19,7 @@
                     "klein.php"
                 ]
             },
-            "time": "2013-01-21 07:52:31"
+            "time": "2013-08-19 15:00:13"
         },
         {
             "name": "dflydev/markdown",
