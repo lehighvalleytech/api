@@ -15,9 +15,6 @@
                     "url": "https://github.com/chriso/klein.php.git",
                     "type": "git",
                     "reference" : "master"
-                },
-                "autoload": {
-                    "files": ["klein.php"]
                 }
             }
         }
