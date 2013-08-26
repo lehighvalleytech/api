@@ -1,6 +1,12 @@
 <?php
 require_once '../vendor/autoload.php';
 
+//delegate radio subdomain to another script
+if($_SERVER['HTTP_HOST'] == 'radio.lehighvalleytech.org'){
+    require_once 'radio.php'; //handled by another 'app'
+}
+
+
 //markdown parser
 $markdown = new \dflydev\markdown\MarkdownParser();
 
@@ -37,7 +43,7 @@ $parseCard = function($card) use ($markdown, $findCover){
 
 //special root redirects, allows some fun custom domains
 respond('GET', '/', function(_Request $request, _Response $response){
-    switch($_SERVER['HTTP_HOST']){ //abstract for testing    
+    switch($_SERVER['HTTP_HOST']){ //abstract for testing
         case 'next.devfriday.com':
             //find the next dev friday
             try{
@@ -54,27 +60,6 @@ respond('GET', '/', function(_Request $request, _Response $response){
             }
             
             $response->redirect($url);
-            break;
-        case 'radio.lehighvalleytech.org':
-            //check if the stream be on
-            $client = new \Zend\Http\Client();
-            $client->setUri('http://a2sw.bytecost.com:8000/?mount=/lvtechradio');
-            $result = $client->send();
-
-            if(!strpos($result->getBody(), 'Mount Point /lvtechradio')){
-                $response->redirect('http://soundcloud.com/lvtech');    
-            } else {
-                //handle different clients
-                switch(true){
-                    case strpos($request->userAgent(), 'Android');
-                        $response->redirect('http://a2sw.bytecost.com:8000/lvtechradio');
-                        break;
-                    default:
-                        $response->redirect('http://a2sw.bytecost.com:8000/lvtechradio.m3u');
-                        break;
-                }
-            }
-            
             break;
         default:
             //should we do this? sure, why not.
@@ -109,7 +94,9 @@ respond('GET', '/lvtech/[i:date].[json|html|txt:format]?', function (_Request $r
 
     //TODO: should do some error checking
     $data = \Zend\Json\Decoder::decode($client->send()->getBody(), true);
-    
+error_log(var_export($data, true));    
+error_log(var_export($date->format('F Y'), true));    
+
     //search for the meetup
     $listId = null;
     foreach($data as $list){
