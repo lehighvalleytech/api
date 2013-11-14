@@ -61,6 +61,9 @@ respond('GET', '/', function(_Request $request, _Response $response){
             
             $response->redirect($url);
             break;
+        case 'chat.lehighvalleytech.org':
+            $response->redirect('http://tlk.io/lvtech');
+            break;
         default:
             //should we do this? sure, why not.
             $response->redirect('http://lehighvalleytech.org');
