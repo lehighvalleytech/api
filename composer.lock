@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dflydev/dflydev-markdown.git",
-                "reference": "11f8faa2d17f717a038b4d372abd22a6ac4a15dc"
+                "reference": "6baed9b50f29c980795b6656d43722aadb126f7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/dflydev/dflydev-markdown/archive/11f8faa2d17f717a038b4d372abd22a6ac4a15dc.zip",
-                "reference": "11f8faa2d17f717a038b4d372abd22a6ac4a15dc",
+                "url": "https://api.github.com/repos/dflydev/dflydev-markdown/zipball/6baed9b50f29c980795b6656d43722aadb126f7e",
+                "reference": "6baed9b50f29c980795b6656d43722aadb126f7e",
                 "shasum": ""
             },
             "require": {
@@ -62,7 +62,7 @@
             "keywords": [
                 "markdown"
             ],
-            "time": "2012-07-15 16:31:27"
+            "time": "2013-09-23 12:00:18"
         },
         {
             "name": "klein/klein",
@@ -156,20 +156,23 @@
         },
         {
             "name": "phly/mustache",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly_mustache.git",
-                "reference": "4ba9470a6b54913967bff4231dc615dfd19c1f4f"
+                "reference": "8f9f2b6644e1aa8439e195f5169f9435749cc763"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly_mustache/zipball/4ba9470a6b54913967bff4231dc615dfd19c1f4f",
-                "reference": "4ba9470a6b54913967bff4231dc615dfd19c1f4f",
+                "url": "https://api.github.com/repos/phly/phly_mustache/zipball/8f9f2b6644e1aa8439e195f5169f9435749cc763",
+                "reference": "8f9f2b6644e1aa8439e195f5169f9435749cc763",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
             },
             "type": "library",
             "autoload": {
@@ -190,11 +193,11 @@
                 }
             ],
             "description": "PHP 5.3 Mustache Implementation",
-            "homepage": "http://wiki.github.com/weierophinney/phly_mustache/",
+            "homepage": "http://weierophinney.github.com/phly_mustache/",
             "keywords": [
                 "mustache"
             ],
-            "time": "2012-08-01 03:33:14"
+            "time": "2013-10-23 14:16:26"
         },
         {
             "name": "phly/phlyty",
@@ -250,17 +253,17 @@
         },
         {
             "name": "zendframework/zendframework",
-            "version": "2.2.3",
+            "version": "2.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "2d22327ec5a3ab62d00b0845620f60cc6a954101"
+                "reference": "4a7cf6a4cf791244e14aa0ca49d1f06916b63202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-2d22327ec5a3ab62d00b0845620f60cc6a954101-zip-1df704.zip",
-                "reference": "2.2.3",
-                "shasum": "548378dc96ecdd26848f4d4b6c9791092b1c0411"
+                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-4a7cf6a4cf791244e14aa0ca49d1f06916b63202-zip-2661de.zip",
+                "reference": "2.2.5",
+                "shasum": "3c699626517e16aa7b3d9a0c811fe41a2586179d"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -320,6 +323,7 @@
             },
             "require-dev": {
                 "doctrine/annotations": ">=1.0",
+                "fabpot/php-cs-fixer": "*@dev",
                 "ircmaxell/random-lib": "dev-master",
                 "ircmaxell/security-lib": "dev-master",
                 "ocramius/proxy-manager": "0.4.*",
@@ -360,10 +364,10 @@
                 "zf2"
             ],
             "support": {
-                "source": "https://github.com/zendframework/zf2/tree/release-2.2.3",
+                "source": "https://github.com/zendframework/zf2/tree/release-2.2.5",
                 "issues": "https://github.com/zendframework/zf2/issues"
             },
-            "time": "2013-08-21 16:43:43"
+            "time": "2013-10-31 15:48:16"
         }
     ],
     "packages-dev": [
