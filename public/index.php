@@ -61,6 +61,9 @@ respond('GET', '/', function(_Request $request, _Response $response){
             
             $response->redirect($url);
             break;
+        case 'meetup.lehighvalleytech.org':
+            $response->redirect('http://www.meetup.com/lehighvalleytech/');
+            break;
         case 'chat.lehighvalleytech.org':
             $response->redirect('http://tlk.io/lvtech');
             break;
