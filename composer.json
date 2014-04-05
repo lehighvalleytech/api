@@ -12,7 +12,8 @@
         "dflydev/markdown": "1.0.*@dev",
         "mustache/mustache": "v2.1.0",
         "phly/phlyty": "1.0.1",
-        "klein/klein": "v1.2.0"
+        "klein/klein": "v1.2.0",
+        "guzzlehttp/guzzle": "4.*"
     },
     "autoload": {
         "psr-0": {
