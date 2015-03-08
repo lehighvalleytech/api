@@ -131,6 +131,7 @@ foreach($prices as $price => $data){
 }
 
 $output = json_encode($output);
+header('Content-Type: application/json');
 echo $output;
 return;
 
