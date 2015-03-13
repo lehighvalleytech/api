@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $client = new GuzzleHttp\Client(['base_url' => 'https://www.eventbriteapi.com']);
