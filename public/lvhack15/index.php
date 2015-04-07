@@ -47,6 +47,7 @@ while($page < $data['pagination']['page_count']){
 $prices = [];
 //track total sales
 $total = 0;
+$total += 500 + 1000 + 1000;
 foreach($attendees as $ticket){
     $total += $ticket['costs']['gross']['value'];
     $cost = md5(serialize($ticket['costs']));
