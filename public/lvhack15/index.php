@@ -84,7 +84,10 @@ foreach($prices as $price => $data){
             $prices[$price]['label'] = 'Late';
             $prices[$price]['type'] = 'ticket';
             break;
-
+        case '50000':
+            $prices[$price]['label'] = 'Parking';
+            $prices[$price]['type'] = 'sponsor';
+            break;
         case '50995':
             $prices[$price]['label'] = 'Platform';
             $prices[$price]['type'] = 'sponsor';
@@ -94,7 +97,7 @@ foreach($prices as $price => $data){
             $prices[$price]['type'] = 'sponsor';
             break;
 
-        case '49500':
+        case '46000':
             $prices[$price]['label'] = 'KU Block';
             $prices[$price]['type'] = 'block';
             $prices[$price]['count'] = 0;
@@ -132,10 +135,12 @@ foreach($prices as $price => $data){
     $rows[$data['type']][] = $row;
 }
 
-$output = json_encode($output);
-header('Content-Type: application/json');
-echo $output;
-return;
+if(!isset($_GET['export']) OR ($_GET['export'] != getenv('EVENTBRITE_KEY'))){
+    $output = json_encode($output);
+    header('Content-Type: application/json');
+    echo $output;
+    return;
+}
 
 //output csv
 header('Content-Type: application/csv');
@@ -145,5 +150,3 @@ foreach($rows as $type => $data){
         fputcsv($fh, array_merge([$type], $row));
     }
 }
-
-//var_dump($rows);
